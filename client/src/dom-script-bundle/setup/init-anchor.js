@@ -1,7 +1,6 @@
 export default function(cb) {
-  const markerClass = 'churchie-marker',
-    body = document.getElementsByTagName('body'),
-    reactAnchor = document.createElement('div');
+  const body = document.getElementsByTagName('body');
+  const reactAnchor = document.createElement('div');
 
   reactAnchor.id = 'churchie-anchor';
   reactAnchor.setAttribute('data-churchie-anchor', true);

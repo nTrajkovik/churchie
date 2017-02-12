@@ -27,6 +27,7 @@ class TextEditor extends Component {
   }
 
   render() {
+    console.log("rendered text editor");
     return (
       <div className="annotate">
         <form onSubmit={this.handleSubmit}>

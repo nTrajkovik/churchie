@@ -20,6 +20,9 @@ const crx = new ChromeExtension({
 
 const compiler = webpack(config);
 compiler.run(function(err, stats) {
+  if(err) {
+    throw err;
+  }
   crx.load([
     './client/manifest.json',
     './client/icon.png',
