@@ -3,13 +3,16 @@ import React, { Component } from 'react';
 class Modal extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
   }
 
   render() {
+    let positioning = {
+      top: this.props.top,
+      left: this.props.left
+    }
     return (
-      <div>
+      <div id="master-modal-container" style={positioning}>
+          im a modal
       </div>
     )
   }
