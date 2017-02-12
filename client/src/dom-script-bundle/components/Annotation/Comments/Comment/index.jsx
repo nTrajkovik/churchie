@@ -8,6 +8,7 @@ class Comment extends React.Component {
   }
 
   render() {
+    console.log('comment props', this.props);
     return (
       <li>
         { this.props.comment }
@@ -20,9 +21,9 @@ class Comment extends React.Component {
   }
 }
 
-Comment.propTypes = {
-  comment: React.propTypes.string.isRequired,
-  imgPath: React.propTypes.string.isRequired,
-};
+// Comment.propTypes = {
+//   comment: React.propTypes.string.isRequired,
+//   imgPath: React.propTypes.string.isRequired,
+// };
 
 export default Comment;

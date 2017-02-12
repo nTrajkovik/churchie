@@ -7,9 +7,7 @@ chrome.runtime.sendMessage('GET_CHROME_ID', (user) => {
     console.log("Chrome User Object:", user);
     console.log("Chrome Username", username);
 
-    PubNub.getHistory(PubNub.pubnub, document.URL, function(history) {
-      setupClickListener(user, username, history);
-    });
+    setupClickListener(user, username)
 
     setupHighlightListener(user, username);
   })

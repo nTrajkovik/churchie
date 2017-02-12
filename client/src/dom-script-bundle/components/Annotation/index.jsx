@@ -1,27 +1,20 @@
 import React, { Component } from 'react';
-import AnnotationDisplay from './AnnotationDisplay';
+import AddComment from './AddComment';
 import Comments from './Comments';
 import Modal from '../Modal';
-import { pubnub, initRealTimeListeners, getHistory, publishMessage } from '../../../helpers/pubnub/userHelpers';
+import {
+  pubnub,
+  createNewComment,
+  initRealTimeListeners,
+  getHistory,
+} from '../../../helpers/pubnub/userHelpers';
 
 class Annotation extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      displayComments: false,
       comments: [{}],
-      username: '',
     };
-  }
-
-  componentWillMount() {
-    this.setState({
-      username: chrome.runtime.sendMessage('GET_USERNAME', (name) => {
-        console.log('Chrome username on sync Object:', name);
-        return name;
-      }),
-    });
     // get history for this annotation channel
     getHistory(pubnub, this.props.annotation, (commentsArray) => {
       const newComments = commentsArray.map((comment) => {
@@ -47,6 +40,8 @@ class Annotation extends Component {
       const update = [...this.state.comments].push(comment);
       this.setState({ comments: update });
     });
+
+    this.submitComment = this.submitComment.bind(this);
   }
 
   componentWillUnmount() {
@@ -73,6 +68,16 @@ class Annotation extends Component {
     publishMessage(pubnub, comment, optionUpdate);
   }
 
+  submitComment(formData) {
+    createNewComment(pubnub, {
+      comment: formData.comment,
+      path: document.URL,
+      googleId: this.props.user.id,
+      name: this.props.username,
+      annotation: this.props.selectionArea,
+    });
+  }
+
   render() {
     const { top } = this.props;
     if (!this.state.comments.length) {
@@ -82,7 +87,10 @@ class Annotation extends Component {
     }
     return (
       <Modal top={top}>
-        { this.state.displayComments ? <AnnotationDisplay /> : <Comments comments={this.state.comments} upVoteCallback={this.upVoteCallback} /> }
+        <div>
+          <Comments comments={this.state.comments} upVoteCallback={this.upVoteCallback} />
+          <AddComment submit={this.submitComment} />
+        </div>
       </Modal>
     );
   }

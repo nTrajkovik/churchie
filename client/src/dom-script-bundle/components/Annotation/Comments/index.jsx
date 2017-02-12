@@ -1,4 +1,5 @@
 import React from 'react';
+import Comment from './Comment';
 
 class Comments extends React.Component {
   constructor(props) {
@@ -10,10 +11,12 @@ class Comments extends React.Component {
   render() {
     return (
       <ul>
-        { this.props.comments.map((comment, index) =>
-          <Comment key={JSON.stringify(comment) + index} comment={comment} upVoteCallback={this.props.upVoteCallback} />,
-        ) }
-      </ul>);
+        { this.props.comments.map((comment, index) => {
+          console.log("indiv comment", comment);
+          return <Comment key={JSON.stringify(comment) + index} comment={comment} upvoteCallback={this.props.upvoteCallback} />
+        }) }
+      </ul>
+    );
   }
 }
 
