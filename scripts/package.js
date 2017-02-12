@@ -15,7 +15,7 @@ try {
 const ChromeExtension = require("crx");
 const crx = new ChromeExtension({
   codebase: "http://localhost:8000/myFirstExtension.crx",
-  privateKey: key
+  privateKey: key,
 });
 
 const compiler = webpack(config);
