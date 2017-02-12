@@ -1,4 +1,5 @@
 import React from 'react';
+import Comments from '../../../components/App/Comments/index';
 
 class Annotation extends React.Component {
   constructor(props) {
@@ -8,7 +9,9 @@ class Annotation extends React.Component {
   }
 
   render() {
-    return null;
+    return (
+      <Comments />
+    );
   }
 }
 
