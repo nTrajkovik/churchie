@@ -9,8 +9,9 @@ const PORT = process.env.PORT || 8080;
 app.use(bodyParser.json());
 
 // Serving of static assets
-app.use('/', express.static(path.resolve(__dirname, '../assets')));
-app.use('/bundles', express.static(path.resolve(__dirname, '../bundles')));
+// Deprecated due. This server is now API only
+// app.use('/', express.static(path.resolve(__dirname, '../assets')));
+// app.use('/bundles', express.static(path.resolve(__dirname, '../bundles')));
 
 app.listen(PORT, (e) => {
   if (e) {

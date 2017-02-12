@@ -4,6 +4,7 @@ built
 npm-debug.log
 bundles
 .vscode
+packaged
 
 #test
 test
