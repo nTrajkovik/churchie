@@ -13,7 +13,7 @@ class Modal extends Component {
     };
 
     return (
-      <div className={styles.masterModalContainer} style={position}>
+      <div id='churchie-modal-container' className={styles.masterModalContainer} style={position}>
         <Annotation />
       </div>
     );

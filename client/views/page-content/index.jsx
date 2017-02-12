@@ -7,12 +7,17 @@ import Modal from '../../components/Modal/index.jsx';
 
 function recursion() {
   userSelectEvent(() =>{
-    initAnchor((props) =>{
-      console.log('RENDERING...');
+    if(document.getElementById('churchie-modal-container') === null) {
+      initAnchor((props) =>{
+        console.log('RENDERING...');
+        const body = document.getElementsByTagName('body'),
+          anchorEl = body[0].children[0],
+          modalElExist = anchorEl.children;
 
-      ReactDOM.render(<Modal {...props}/>, document.getElementById('churchie-anchor'));
-      recursion();
-    });
+        ReactDOM.render(<Modal {...props}/>, document.getElementById('churchie-anchor'));
+        recursion();
+      });
+    }
   });
 }
 
