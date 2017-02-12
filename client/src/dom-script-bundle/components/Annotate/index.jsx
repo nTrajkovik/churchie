@@ -12,7 +12,11 @@ class Annotate extends Component {
   render() {
     return (
       <Modal top={this.props.top}>
-        <TextEditor />
+        <TextEditor
+          path={this.props.path}
+          googleId={this.props.googleId}
+          name={this.props.username}
+          selectionArea={this.props.selectionArea} />
       </Modal>
     );
   }

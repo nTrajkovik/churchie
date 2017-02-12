@@ -25,7 +25,7 @@ class TextEditor extends Component {
       path: this.props.path,
       googleId: this.props.googleId,
       name: this.props.name,
-      annotation: this.props.annotation
+      annotation: this.props.selectionArea
     });
   }
 
