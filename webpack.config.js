@@ -2,12 +2,13 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  entry: [
-    path.resolve(__dirname, 'client/index.jsx'),
-  ],
+  entry: {
+    "menu-content": path.resolve(__dirname, 'client/views/menu-content/index.jsx'),
+    "page-content": path.resolve(__dirname, 'client/views/page-content/index.jsx'),
+  },
   output: {
     path: path.resolve(__dirname, 'bundles'),
-    filename: 'bundle.js',
+    filename: '[name].js',
   },
   module: {
     loaders: [
