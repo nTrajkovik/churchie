@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 class TextEditor extends Component {
   constructor(props) {
     super(props);
-    console.log("ATTEMPTED TO RENDER TEXT EDITOR")
     this.state = {
       // All the user information that pubnub
       // will need I expect to come from props.
@@ -28,6 +27,7 @@ class TextEditor extends Component {
   }
 
   render() {
+    console.log("rendered text editor");
     return (
       <div className="annotate">
         <form onSubmit={this.handleSubmit}>
