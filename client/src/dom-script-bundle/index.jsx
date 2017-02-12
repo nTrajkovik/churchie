@@ -1,6 +1,16 @@
-import setupHighlightListener from './setup';
+import setupHighlightListener from './setup/highlightListener';
+import setupClickListener from './setup/clickListener';
+import PubNub from '../helpers/pubnub/userHelpers';
 
 chrome.runtime.sendMessage('GET_CHROME_ID', (user) => {
-  console.log("Chrome User Object:", user);
-  setupHighlightListener();
+  chrome.runtime.sendMessage('GET_USERNAME', (username) => {
+    console.log("Chrome User Object:", user);
+    console.log("Chrome Username", username);
+
+    PubNub.getHistory(PubNub.pubnub, document.URL, function(history) {
+      setupClickListener(user, username, history);
+    });
+
+    setupHighlightListener(user, username);
+  })
 });
