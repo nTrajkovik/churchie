@@ -9,7 +9,7 @@ class Modal extends Component {
 
   render() {
     const position = {
-      'top': this.props.top
+      'top': `${this.props.top}px`
     };
 
     return (
