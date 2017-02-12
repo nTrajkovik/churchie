@@ -10,8 +10,8 @@ class Comments extends React.Component {
   render() {
     return (
       <ul>
-        { this.props.commments.map((comment, index) =>
-          <Comment key={JSON.stringify(comment) + index} comment={comment} />,
+        { this.props.comments.map((comment, index) =>
+          <Comment key={JSON.stringify(comment) + index} comment={comment} upVoteCallback={this.props.upVoteCallback} />,
         ) }
       </ul>);
   }

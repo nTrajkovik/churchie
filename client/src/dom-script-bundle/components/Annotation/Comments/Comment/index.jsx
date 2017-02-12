@@ -14,6 +14,7 @@ class Comment extends React.Component {
         { this.props.imgPath ?
           <img className="userImage" alt={'Not found'} src={this.props.imgPath} /> :
           null }
+        <button onClick={() => { this.props.upVoteCallback(this.props.comment); }}>upVote</button>
       </li>
     );
   }
@@ -25,18 +26,3 @@ Comment.propTypes = {
 };
 
 export default Comment;
-
-
-const initRealTimeListenersCallback = (pubnub, channel, option) => {
-  const { comment, path, googleId, name, annotation, up, version } = option;
-  const optionUpdate = {
-    comment,
-    path,
-    googleId,
-    name,
-    annotation,
-    up: up + 1,
-    version: version + 1,
-  };
-  publishMessage(pubnub, channel, optionUpdate);
-};
