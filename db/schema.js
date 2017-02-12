@@ -1,56 +1,74 @@
-const config = require('./config');
-const knex = require('knex')(config);
-const bookshelf = require('bookshelf')(knex);
+const Sequelize = require('sequelize');
+const db = require('./config');
 
-bookshelf.knex.schema.hasTable('users').then((exists) => {
-  if (!exists) {
-    bookshelf.knex.schema.createTable('users', (user) => {
-      user.increments('id').primary();
-      user.text('name');
-      user.text('chromeId');  //hashed
-      user.boolean('expert');
-      user.timestamps();
-    }).then((table) => {
-      console.log('Created Table', table);
-    });
-  }
+const User = db.define('user', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: Sequelize.TEXT,
+  googleId: Sequelize.TEXT,
+  expert: {
+    type: Sequelize.BOOLEAN,
+    default: false,
+  },
 });
 
-bookshelf.knex.schema.hasTable('urls').then((exists) => {
-  if (!exists) {
-    bookshelf.knex.schema.createTable('urls', (url) => {
-      url.increments('id').primary();
-      url.text('path');
-      url.timestamps();
-    }).then((table) => {
-      console.log('Created Table', table);
-    });
-  }
+const Url = db.define('url', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  path: Sequelize.TEXT,
 });
 
-bookshelf.knex.schema.hasTable('passages').then((exists) => {
-  if (!exists) {
-    bookshelf.knex.schema.createTable('passages', (passage) => {
-      passage.increments('id').primary();
-      passage.text('text');
-      passage.timestamps();
-      passage.integer('url_id').references('urls.id');
-    }).then((table) => {
-      console.log('Created Table', table);
-    });
-  }
+const Annotation = db.define('annotation', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  text: Sequelize.TEXT,
 });
 
-bookshelf.knex.schema.hasTable('comments').then((exists) => {
-  if (!exists) {
-    bookshelf.knex.schema.createTable('comments', (comment) => {
-      comment.increments('id').primary();
-      comment.text('text');
-      comment.timestamps();
-      comment.integer('passage_id').references('passages.id');
-      comment.integer('user_id').references('users.id');
-    }).then((table) => {
-      console.log('Created Table', table);
-    });
-  }
+const Comment = db.define('comment', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  text: Sequelize.TEXT,
+  upVotes: {
+    type: Sequelize.INTEGER,
+    default: 0,
+  },
+  downVotes: {
+    type: Sequelize.INTEGER,
+    default: 0,
+  },
 });
+
+Annotation.belongsTo(Url, { foreignKey: 'urlId' });
+Url.hasMany(Annotation, { foreignKey: 'urlId' });
+
+Comment.belongsTo(Annotation, { foreignKey: 'annotationId' });
+Annotation.hasMany(Comment, { foreignKey: 'annotationId' });
+
+Comment.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Comment, { foreignKey: 'userId' });
+
+db.sync({ force: false })
+.then(() => {
+  console.log('Tables synced');
+}).catch((err) => {
+  console.log(`Failed to sync tables: ${err}`);
+});
+
+module.exports = {
+  User,
+  Url,
+  Annotation,
+  Comment,
+};
