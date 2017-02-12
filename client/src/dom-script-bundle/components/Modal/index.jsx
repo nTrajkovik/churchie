@@ -1,4 +1,4 @@
-import React from 'react';
+import { React } from 'react';
 import styles from './main.css';
 
 function Modal({ top, children }) {
