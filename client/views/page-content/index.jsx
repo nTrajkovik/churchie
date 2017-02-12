@@ -6,7 +6,7 @@ import Modal from '../../components/Modal/index.jsx';
 
 userSelectEvent.then(() =>{
   initAnchor((props) =>{
-    console.log('MODAL RENDERED');
+    console.log('RENDERING...');
     ReactDOM.render(<Modal {...props}/>, document.getElementById('churchie-anchor'));
   });
 });
