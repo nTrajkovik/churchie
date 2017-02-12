@@ -22,19 +22,20 @@ const compiler = webpack(config);
 compiler.run(function(err, stats) {
   crx.load([
     './client/manifest.json',
-    './client/index.html',
+    './client/views/menu-content/index.html',
     './client/icon.png',
-    './bundles/bundle.js',
+    './bundles/menu-content.js',
+    './bundles/page-content.js',
   ])
   .then(crx => crx.pack())
   .then(crxBuffer => {
-    console.log("Got the buffer", crxBuffer);
     fs.access('./packaged', (err) => {
-      console.log('err', err);
       if (err) {
         fs.mkdirSync('./packaged');
       }
       fs.writeFileSync(`./packaged/churchie.crx`, crxBuffer);
+      console.log("All good! Chrome extension packaged!");
+      process.exit(0);
     });
   })
   .catch(e => {
