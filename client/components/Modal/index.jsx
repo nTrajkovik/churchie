@@ -1,23 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styles from './main.css';
-import Annotation from '../App/Annotation/index.jsx';
+import Annotation from '../App/Annotation';
 
-class Modal extends Component {
-  constructor(props) {
-    super(props);
-  }
+function Modal({ top }) {
+  const position = {
+    top: `${top}px`,
+  };
 
-  render() {
-    const position = {
-      'top': `${this.props.top}px`
-    };
-
-    return (
-      <div id='churchie-modal-container' className={styles.masterModalContainer} style={position}>
-        <Annotation />
-      </div>
-    );
-  }
+  return (
+    <div id="churchie-modal-container" className={styles.masterModalContainer} style={position}>
+      <Annotation />
+    </div>
+  );
 }
+
+Modal.propTypes = {
+  top: React.propTypes.string.isRequired,
+};
 
 export default Modal;

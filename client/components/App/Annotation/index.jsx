@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import Comments from '../Comments/index';
 
 class Annotation extends React.Component {
@@ -9,13 +8,6 @@ class Annotation extends React.Component {
     this.state = {
       comments: [],
     };
-  }
-
-  componentWillMount() {
-    // axios.get(/* TODO: get url */)
-    //   .then((res) => {
-    //     this.setState({ comments: res });
-    //   });
   }
 
   render() {
