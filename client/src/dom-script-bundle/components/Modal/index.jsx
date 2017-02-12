@@ -3,7 +3,7 @@ import styles from './main.css';
 
 function Modal({ top, children }) {
   const position = {
-    top: `${top}px`,
+    top: `${top}px`
   };
   return (
     <div id="churchie-modal-container" className={styles.masterModalContainer} style={position}>
@@ -12,8 +12,8 @@ function Modal({ top, children }) {
   );
 }
 
-// Modal.propTypes = {
-//   top: React.PropTypes.number.isRequired,
-// };
+Modal.propTypes = {
+  top: React.PropTypes.number.isRequired
+};
 
 export default Modal;

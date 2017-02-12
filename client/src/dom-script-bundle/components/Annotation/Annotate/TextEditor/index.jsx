@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { pubnub, createNewComment } from '../../../../helpers/pubnub/userHelpers.js';
+import { pubnub, createNewComment } from '../../../../../helpers/pubnub/userHelpers.js';
 
 class TextEditor extends Component {
   constructor(props) {
