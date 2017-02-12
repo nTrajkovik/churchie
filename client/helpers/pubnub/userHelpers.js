@@ -21,7 +21,7 @@ dbPubnub.addListener({
       console.log('got message in newComment', m.message);
     }
     if (chan === 'lobby') {
-      // startup(m.message);
+      // startup(m.message);7
       console.log('got message in lobby', m.message);
     }
 
@@ -141,7 +141,7 @@ function intializeAnnotations(path, googleId, callback) {
     (status, response) => {
       console.log('status of url request is: ', status);
       console.log('response from url request is: ', response);
-      // callback(response);
+      callback(response);
     },
   );
 }

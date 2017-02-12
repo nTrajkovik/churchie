@@ -14,11 +14,13 @@
     }
   ],
   "background": {
-    "scripts": ["bundles/background.js"],
+    "scripts": ["./background.js"],
     "persistent": true
   },
   "permissions": [
     "activeTab",
+    "identity",
+    "identity.email",
     "https://ajax.googleapis.com/"
   ]
 }

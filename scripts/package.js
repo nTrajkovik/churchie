@@ -27,7 +27,7 @@ compiler.run(function(err, stats) {
     // Ideally I'd like this to just loop over all of the outputted webpack bundles but for now it's a manual job, oh well
     './bundles/menu-content.js',
     './bundles/page-content.js',
-    './bundles/background.js',
+    './client/background.js',
   ])
   .then(crx => crx.pack())
   .then(crxBuffer => {

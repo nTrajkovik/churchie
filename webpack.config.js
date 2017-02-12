@@ -6,7 +6,6 @@ module.exports = {
   entry: {
     'menu-content': path.resolve(__dirname, 'client/views/menu-content/index.jsx'),
     'page-content': path.resolve(__dirname, 'client/views/page-content/index.jsx'),
-    'background': path.resolve(__dirname, 'client/background.js'),
   },
   output: {
     path: path.resolve(__dirname, 'bundles'),
