@@ -21,6 +21,7 @@
     "activeTab",
     "identity",
     "identity.email",
-    "https://ajax.googleapis.com/"
+    "https://ajax.googleapis.com/",
+    "storage"
   ]
 }
