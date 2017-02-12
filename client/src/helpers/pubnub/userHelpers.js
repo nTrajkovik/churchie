@@ -44,8 +44,8 @@ const publishMessage = function (pubnub, channel, option) {
 
 // publishes a new annotation to the newAnnotation channel
 function createNewComment(pubnub, { comment, path, googleId, name, annotation }) {
-  publishMessage(pubnub, googleId, { comment, path, googleId, name, annotation });
-  publishMessage(pubnub, annotation, { comment, path, googleId, name, annotation });
+  publishMessage(pubnub, googleId, { comment, path, googleId, name, annotation, up: 0, version: 0 });
+  publishMessage(pubnub, annotation, { comment, path, googleId, name, annotation, up: 0, version: 0 });
 }
 
 
@@ -56,4 +56,3 @@ module.exports = {
   getHistory,
   initRealTimeListeners,
 };
-

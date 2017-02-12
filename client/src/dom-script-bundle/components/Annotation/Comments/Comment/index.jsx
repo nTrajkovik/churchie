@@ -25,3 +25,18 @@ Comment.propTypes = {
 };
 
 export default Comment;
+
+
+const initRealTimeListenersCallback = (pubnub, channel, option) => {
+  const { comment, path, googleId, name, annotation, up, version } = option;
+  const optionUpdate = {
+    comment,
+    path,
+    googleId,
+    name,
+    annotation,
+    up: up + 1,
+    version: version + 1,
+  };
+  publishMessage(pubnub, channel, optionUpdate);
+};
