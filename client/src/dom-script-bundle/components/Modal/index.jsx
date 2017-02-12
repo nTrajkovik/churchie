@@ -1,4 +1,4 @@
-import { React } from 'react';
+import React from 'react';
 import styles from './main.css';
 
 function Modal({ top, children }) {
@@ -12,8 +12,8 @@ function Modal({ top, children }) {
   );
 }
 
-Modal.propTypes = {
-  top: React.PropTypes.number.isRequired,
-};
+// Modal.propTypes = {
+//   top: React.PropTypes.number.isRequired,
+// };
 
 export default Modal;
