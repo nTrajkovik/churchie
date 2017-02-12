@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styles from './main.css';
-
-console.log('stykes', styles);
+import Annotation from '../App/Annotation/index.jsx';
 
 class Modal extends Component {
   constructor(props) {
@@ -9,15 +8,16 @@ class Modal extends Component {
   }
 
   render() {
+    console.log('TYPEOF', typeof this.props.top)
     const position = {
       'top': this.props.top
     };
 
     return (
       <div className={styles.masterModalContainer} style={position}>
-          im a modal
+        <Annotation />
       </div>
-    )
+    );
   }
 }
 
