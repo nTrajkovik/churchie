@@ -20,7 +20,9 @@ class Annotation extends React.Component {
 
   render() {
     return (
-      <Comments props={this.state} />
+      { this.state ?
+        <Comments props={this.state} /> :
+        null }
     );
   }
 }
