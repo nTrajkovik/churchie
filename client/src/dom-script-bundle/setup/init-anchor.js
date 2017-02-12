@@ -8,4 +8,4 @@ export default function(cb) {
   body[0].insertBefore(reactAnchor, body[0].firstChild);
 
   cb({'top': document.body.scrollTop});
-};
+}

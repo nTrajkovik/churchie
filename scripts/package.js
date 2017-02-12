@@ -22,15 +22,15 @@ const compiler = webpack(config);
 compiler.run(function(err, stats) {
   crx.load([
     './client/manifest.json',
-    './client/views/menu-content/index.html',
     './client/icon.png',
     // Ideally I'd like this to just loop over all of the outputted webpack bundles but for now it's a manual job, oh well
-    './bundles/menu-content.js',
-    './bundles/page-content.js',
-    './client/background.js',
+    './bundles/dom-script.bundle.js',
+    './bundles/toolbar-menu.bundle.js',
+    './client/src/toolbar-menu-bundle/index.html',
+    './client/src/background/index.js',
   ])
   .then(crx => crx.pack())
-  .then(crxBuffer => {
+  .then((crxBuffer) => {
     fs.access('./packaged', (err) => {
       if (err) {
         fs.mkdirSync('./packaged');
@@ -40,8 +40,5 @@ compiler.run(function(err, stats) {
       process.exit(0);
     });
   })
-  .catch(e => {
-    console.log('found some error', e)
-  });
-
+  .catch(e => console.log('found some error', e));
 });
