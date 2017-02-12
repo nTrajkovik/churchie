@@ -8,9 +8,8 @@ class Modal extends Component {
   }
 
   render() {
-    console.log('TYPEOF', typeof this.props.top)
     const position = {
-      'top': this.props.top
+      'top': `${this.props.top}px`
     };
 
     return (
