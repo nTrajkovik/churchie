@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import Comments from '../../../components/App/Comments/index';
+import Comments from '../Comments/index';
 
 class Annotation extends React.Component {
   constructor(props) {
@@ -20,9 +20,10 @@ class Annotation extends React.Component {
 
   render() {
     return (
-      { this.state ?
-        <Comments props={this.state} /> :
-        null }
+      // { this.state.comments.length ?
+      //   <Comments props={this.state} /> :
+      //   null }
+      <span />
     );
   }
 }

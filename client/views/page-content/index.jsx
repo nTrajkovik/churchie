@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import userSelectEvent from '../user-select';
+import userSelectEvent from '../../user-select';
 import initAnchor from './init-anchor';
 import Modal from '../../components/Modal/index.jsx';
 
