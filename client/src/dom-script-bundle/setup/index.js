@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Rx from 'rxjs/Rx';
-import Annotate from '../components/Annotate';
+import Annotate from '../components/Annotation/Annotate';
 import userSelectEvent from './user-select';
 import initAnchor from './init-anchor';
 
