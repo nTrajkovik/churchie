@@ -1,5 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import initAnchor from './init-anchor';
+import Modal from '../../components/Modal/index.jsx';
 
-console.log("THIS THING WAS CALLED");
+initAnchor((props) =>{
+  ReactDOM.render(<Modal {...props}/>, document.getElementById('churchie-anchor'));
+});
+
 

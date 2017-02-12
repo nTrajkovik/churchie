@@ -1,0 +1,8 @@
+:local .masterModalContainer {
+  z-index: 1000;
+  position: absolute;
+  width: 50%;
+  height: 80%;
+  margin: 20px 0 0 20px;
+  background-color: blue;
+}
