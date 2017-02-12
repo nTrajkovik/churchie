@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TextEditor from './TextEditor';
-import Modal from '../Modal';
+import Modal from '../../Modal';
 
 class Annotate extends Component {
   constructor(props) {
