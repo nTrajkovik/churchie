@@ -2,14 +2,14 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   entry: {
-    'menu-content': path.resolve(__dirname, 'client/views/menu-content/index.jsx'),
-    'page-content': path.resolve(__dirname, 'client/views/page-content/index.jsx'),
+    'toolbar-menu': path.resolve(__dirname, 'client/src/toolbar-menu-bundle/index.jsx'),
+    'dom-script': path.resolve(__dirname, 'client/src/dom-script-bundle/index.jsx'),
   },
   output: {
     path: path.resolve(__dirname, 'bundles'),
-    filename: '[name].js',
+    filename: '[name].bundle.js',
   },
   module: {
     loaders: [

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AnnotationDisplay from './AnnotationDisplay';
 import Comments from './Comments';
+import Modal from '../Modal';
 
 class Annotation extends Component {
   constructor(props) {
@@ -11,10 +12,11 @@ class Annotation extends Component {
     };
   }
   render() {
+    const { top } = this.props;
     return (
-      <div>
+      <Modal top={top}>
         { this.state.displayComments ? <AnnotationDisplay /> : <Comments /> }
-      </div>
+      </Modal>
     );
   }
 }

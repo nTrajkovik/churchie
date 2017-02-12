@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-class Annotate extends Component {
+class TextEditor extends Component {
   constructor(props) {
     super(props);
+    console.log("ATTEMPTED TO RENDER TEXT EDITOR")
     this.state = {
       // All the user information that pubnub
       // will need I expect to come from props.
@@ -43,4 +44,4 @@ class Annotate extends Component {
   }
 }
 
-export default Annotate;
+export default TextEditor;
