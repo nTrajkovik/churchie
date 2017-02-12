@@ -12,10 +12,10 @@ class Annotation extends React.Component {
   }
 
   componentWillMount() {
-    axios.get(/* TODO: get url */)
-      .then((res) => {
-        this.setState({ comments: res });
-      });
+    // axios.get(/* TODO: get url */)
+    //   .then((res) => {
+    //     this.setState({ comments: res });
+    //   });
   }
 
   render() {
