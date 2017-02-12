@@ -1,4 +1,4 @@
-const { User, Url, Passage, Comment } = require('./schema');
+const { User, Url, Annotation, Comment } = require('./schema');
 
 User.create({
   name: 'Ian Stinson',
