@@ -11,7 +11,7 @@ const User = db.define('user', {
   googleId: Sequelize.TEXT,
   expert: {
     type: Sequelize.BOOLEAN,
-    default: false,
+    defaultValue: false,
   },
 });
 
@@ -42,11 +42,11 @@ const Comment = db.define('comment', {
   text: Sequelize.TEXT,
   upVotes: {
     type: Sequelize.INTEGER,
-    default: 0,
+    defaultValue: 0,
   },
   downVotes: {
     type: Sequelize.INTEGER,
-    default: 0,
+    defaultValue: 0,
   },
 });
 
