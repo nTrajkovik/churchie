@@ -8,8 +8,17 @@ class Comments extends React.Component {
   }
 
   render() {
-    return null;
+    return (
+      <ul>
+        { this.props.commments.map(comment =>
+          <Comment key={comment.id} comment={comment} />
+        ) }
+      </ul>);
   }
 }
+
+Comments.propTypes = {
+  commments: React.propTypes.string.isRequired,
+};
 
 export default Comments;
