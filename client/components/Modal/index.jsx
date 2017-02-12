@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import styles from './main.css';
+
+console.log('stykes', styles);
 
 class Modal extends Component {
   constructor(props) {
@@ -6,14 +9,16 @@ class Modal extends Component {
   }
 
   render() {
-    let positioning = {
-      top: this.props.top,
-      left: this.props.left
-    }
+    const position = {
+      'top': this.props.top
+    };
+
     return (
-      <div id="master-modal-container" style={positioning}>
+      <div className={styles.masterModalContainer} style={position}>
           im a modal
       </div>
     )
   }
 }
+
+export default Modal;
