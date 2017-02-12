@@ -1,65 +1,33 @@
 import PubNub from 'pubnub';
-import { startUp, getAnnotations, postComment } from '../server/dbHelpers';
+// import { startup, getAnnotations, getComments, postUrl, postAnnotation, postComment } from '../server/dbHelpers.js';
+
 
 const clientPubnub = new PubNub({
   publishKey: 'pub-c-302c6d93-f6f7-4ea4-8055-6f14819b5414',
   subscribeKey: 'sub-c-624b07aa-f090-11e6-8e1d-02ee2ddab7fe',
 });
 
+
 const dbPubnub = new PubNub({
   publishKey: 'pub-c-302c6d93-f6f7-4ea4-8055-6f14819b5414',
   subscribeKey: 'sub-c-624b07aa-f090-11e6-8e1d-02ee2ddab7fe',
 });
 
-const getAnnotationsAndPublish = (message, channel) => {
-  getAnnotations(message)
-  .then(JSON.stringify)
-  .then(annotations => (
-    dbPubnub.publish({
-      message: {
-        annotations,
-      },
-      channel,
-    },
-    (status, response) => {
-      console.log(`status of annotation publish is: ${status}`);
-      console.log(`response from annotation publish is: ${response}`);
-    })
-  ));
-};
-
-const postNewCommentAndPublish = (message, channel) => {
-  postComment(message)
-  .then(JSON.stringify)
-  .then(comment => (
-    dbPubnub.publish({
-      message: {
-        comment,
-      },
-      channel,
-    },
-    (status, response) => {
-      console.log(`status of annotation publish is: ${status}`);
-      console.log(`response from annotation publish is: ${response}`);
-    })
-  ));
-};
-
 dbPubnub.addListener({
   message(m) {
-    const { message, chan } = m;
+    const chan = m.channel;
     if (chan === 'newComment') {
-      console.log('got message in newComment', message);
-      postNewCommentAndPublish(message, message.path);
+      // postComment(m.message);
+      console.log('got message in newComment', m.message);
     }
     if (chan === 'lobby') {
-      console.log('got message in lobby', message);
-      startUp(message)
-      .then(() => { console.log('started up'); });
+      // startup(m.message);
+      console.log('got message in lobby', m.message);
     }
+
     if (chan === 'request') {
-      console.log('got message in request', message);
-      getAnnotationsAndPublish(message, 'chromeID'); // XXXXXXXXX
+      // handleRequest(m.message);
+      console.log('got message in request', m.message);
     }
   },
 });
@@ -117,13 +85,12 @@ dbPubnub.subscribe({
 
 
 function initializeUser(user, googleId) {
-  debugger;
   clientPubnub.subscribe({
     channels: [user],
     withPresence: true,
   }, (status, response) => {
-    console.log(`status of subscription to ${user} is: ${status}`);
-    console.log(`response of subscription to ${user} is: ${response}`);
+    console.log(`status of subscription to ${user} is: `, status);
+    console.log(`response of subscription to ${user} is: `, response);
   });
 }
 
@@ -132,8 +99,8 @@ function initializeModal(googleId, annotation, callback) {
     channels: [annotation],
     withPresence: true,
   }, (status, response) => {
-    console.log(`status of subscription to ${annotation} is: ${status}`);
-    console.log(`response of subscription to ${annotation} is: ${response}`);
+    console.log(`status of subscription to ${annotation} is: `, status);
+    console.log(`response of subscription to ${annotation} is: `, response);
   });
 
   clientPubnub.publish(
@@ -146,8 +113,8 @@ function initializeModal(googleId, annotation, callback) {
       channel: 'request',
     },
     (status, response) => {
-      console.log(`status of annotation request is: ${status}`);
-      console.log(`response from annotation request is: ${response}`);
+      console.log('status of annotation request is: ', status);
+      console.log('response from annotation request is: ', response);
       // callback(response);
     },
   );
@@ -158,8 +125,8 @@ function intializeAnnotations(path, googleId, callback) {
     channels: [path],
     withPresence: true,
   }, (status, response) => {
-    console.log(`status of subscription to ${path} is: ${status}`);
-    console.log(`response of subscription to ${path} is: ${response}`);
+    console.log(`status of subscription to ${path} is: `, status);
+    console.log(`response of subscription to ${path} is: `, response);
   });
 
   clientPubnub.publish(
