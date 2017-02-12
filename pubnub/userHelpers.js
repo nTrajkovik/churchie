@@ -1,4 +1,5 @@
 import PubNub from 'pubnub';
+// import { startup, getAnnotations, getComments, postUrl, postAnnotation, postComment } from '../server/dbHelpers.js';
 
 
 const clientPubnub = new PubNub({
@@ -15,13 +16,24 @@ const dbPubnub = new PubNub({
 dbPubnub.addListener({
   message(m) {
     const chan = m.channel;
-    if (chan === 'newAnnotation') {
-      console.log('got message: ', m.message);
+    if (chan === 'newComment') {
+      // postComment(m.message);
+      console.log('got message in newComment', m.message);
+    }
+    if (chan === 'lobby') {
+      // startup(m.message);
+      console.log('got message in lobby', m.message);
+    }
+
+    if (chan === 'request') {
+      // handleRequest(m.message);
+      console.log('got message in request', m.message);
     }
   },
 });
+
 dbPubnub.subscribe({
-  channels: ['newAnnotation'],
+  channels: ['newComment', 'lobby', 'request'],
   withPresence: true,
 });
 // pubnub.addListener({
@@ -72,27 +84,98 @@ dbPubnub.subscribe({
 // });
 
 
-function getAnnotationInfo() {
-
+function initializeUser(user, googleId) {
+  clientPubnub.subscribe({
+    channels: [user],
+    withPresence: true,
+  }, (status, response) => {
+    console.log(`status of subscription to ${user} is: `, status);
+    console.log(`response of subscription to ${user} is: `, response);
+  });
 }
 
-function getModalInfo() {
+function initializeModal(googleId, annotation, callback) {
+  clientPubnub.subscribe({
+    channels: [annotation],
+    withPresence: true,
+  }, (status, response) => {
+    console.log(`status of subscription to ${annotation} is: `, status);
+    console.log(`response of subscription to ${annotation} is: `, response);
+  });
 
-}
-
-function signInUser() {
-
-}
-
-// publishes a new annotation to the newAnnotation channel
-function createNewAnnotation(annotation, url) {
   clientPubnub.publish(
     {
       message: {
-        text: annotation,
-        url,
+        type: 'annotation',
+        googleId,
+        annotation,
       },
-      channel: 'newAnnotation',
+      channel: 'request',
+    },
+    (status, response) => {
+      console.log('status of annotation request is: ', status);
+      console.log('response from annotation request is: ', response);
+      // callback(response);
+    },
+  );
+}
+
+function intializeAnnotations(path, googleId, callback) {
+  clientPubnub.subscribe({
+    channels: [path],
+    withPresence: true,
+  }, (status, response) => {
+    console.log(`status of subscription to ${path} is: `, status);
+    console.log(`response of subscription to ${path} is: `, response);
+  });
+
+  clientPubnub.publish(
+    {
+      message: {
+        type: 'path',
+        googleId,
+        path,
+      },
+      channel: 'request',
+    },
+    (status, response) => {
+      console.log('status of url request is: ', status);
+      console.log('response from url request is: ', response);
+      // callback(response);
+    },
+  );
+}
+
+// publishes a new annotation to the newAnnotation channel
+function createNewComment(name, googleId, comment, path, annotation, annotationId, callback) {
+  clientPubnub.publish(
+    {
+      message: {
+        comment,
+        path,
+        googleId,
+        name,
+        annotation,
+        annotationId,
+      },
+      channel: 'newComment',
+    },
+    (status, response) => {
+      console.log('status of published annotation is: ', status);
+      console.log('response from published annotation is: ', response);
+      // callback(response);
+    },
+  );
+}
+
+function publishToLobby(name, googleId) {
+  clientPubnub.publish(
+    {
+      message: {
+        name,
+        googleId,
+      },
+      channel: 'lobby',
     },
     (status, response) => {
       console.log('status of published annotation is: ', status);
@@ -101,14 +184,11 @@ function createNewAnnotation(annotation, url) {
   );
 }
 
-function createNewComment() {
-
-}
-
-function createNewUser() {
-
-}
 
 module.exports = {
-  createNewAnnotation,
+  publishToLobby,
+  createNewComment,
+  intializeAnnotations,
+  initializeModal,
+  initializeUser,
 };
