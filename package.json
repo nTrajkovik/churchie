@@ -44,12 +44,11 @@
   "dependencies": {
     "axios": "^0.15.3",
     "body-parser": "^1.16.1",
-    "bookshelf": "^0.10.3",
     "express": "^4.14.1",
-    "knex": "^0.12.6",
     "mysql": "^2.13.0",
     "pubnub": "^4.4.3",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "sequelize": "^3.30.2"
   }
 }

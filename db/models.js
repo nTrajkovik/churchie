@@ -5,7 +5,7 @@ const bookshelf = require('bookshelf')(knex);
 const User = bookshelf.Model.extend({
   tableName: 'users',
   hasTimestamps: true,
-  comments() {
+  comments: function() {
     return this.hasMany(Comment);
   },
 });
@@ -13,7 +13,7 @@ const User = bookshelf.Model.extend({
 const Url = bookshelf.Model.extend({
   tableName: 'urls',
   hasTimestamps: true,
-  passages() {
+  passages: function() {
     return this.hasMany(Passage);
   },
 });
@@ -21,10 +21,10 @@ const Url = bookshelf.Model.extend({
 const Passage = bookshelf.Model.extend({
   tableName: 'passages',
   hasTimestamps: true,
-  url() {
+  url: function() {
     return this.belongsTo(Url);
   },
-  comments() {
+  comments: function() {
     return this.hasMany(Comment);
   },
 });
@@ -32,10 +32,10 @@ const Passage = bookshelf.Model.extend({
 const Comment = bookshelf.Model.extend({
   tableName: 'comments',
   hasTimestamps: true,
-  passage() {
+  passage: function() {
     return this.belongsTo(Passage);
   },
-  user() {
+  user: function() {
     return this.belongsTo(User);
   },
 });

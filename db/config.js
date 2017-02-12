@@ -1,12 +1,13 @@
-const config = {
-  client: 'mysql',
-  connection: {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'churchie',
-    charset: 'utf8',
-  },
-};
+const Sequelize = require('sequelize');
 
-module.exports = config;
+const db = new Sequelize('churchie', 'root', '', {
+  host: 'localhost',
+  dialect: 'mysql',
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000,
+  },
+});
+
+module.exports = db;
