@@ -4,19 +4,27 @@ import userSelectEvent from '../../user-select';
 import initAnchor from './init-anchor';
 import Modal from '../../components/Modal/index.jsx';
 
-userSelectEvent.then(() =>{
-  initAnchor((props) =>{
-    console.log('RENDERING...');
-    
-    ReactDOM.render(<Modal {...props}/>, document.getElementById('churchie-anchor'));
+function recursion() {
+  userSelectEvent(() =>{
+    initAnchor((props) =>{
+      console.log('RENDERING...');
+      
+      ReactDOM.render(<Modal {...props}/>, document.getElementById('churchie-anchor'));
+      recursion();
+    });
   });
-  
-  document.body.addEventListener('click', function(e) {
-    if(e.target.attributes[0] !== 'data-reactroot'){
-      /*WHERE WE NEED TO CLOSE AND RESET MODAL*/
-    }
-  });
+}
+
+document.body.addEventListener('click', function(e) {
+  if((e.target.parentNode.getAttribute('data-churchie-anchor') !== 'true') && (document.getElementById('churchie-anchor') !== null)){
+    const body = document.getElementsByTagName('body');
+
+    body[0].removeChild(document.getElementById('churchie-anchor'));
+  }
 });
+
+
+recursion();
 
 
 

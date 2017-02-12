@@ -1,5 +1,5 @@
-export default new Promise((resolve, reject) =>{
-  document.body.addEventListener('mouseup', (e) => {
+export default function(cb) {
+  var selectEvent = document.body.addEventListener('mouseup', (e) => {
     let text = '';
     if (window.getSelection) {
       text = window.getSelection().toString();
@@ -15,7 +15,9 @@ export default new Promise((resolve, reject) =>{
           e.target.innerHTML = `${dataArr[0]}<mark>${text}</mark>${dataArr[1]}`;
         }
       });
-      resolve();
+      document.body.removeEventListener('mouseup', selectEvent);
+      cb();
     }
   });
-});
+};
+
