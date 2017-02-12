@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Comments from '../Comments/index';
 
-class Annotation extends React.Component {
+class AnnotationDisplay extends Component {
   constructor(props) {
     super(props);
 
@@ -17,4 +17,4 @@ class Annotation extends React.Component {
   }
 }
 
-export default Annotation;
+export default AnnotationDisplay;

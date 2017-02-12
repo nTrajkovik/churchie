@@ -7,13 +7,16 @@ class Annotation extends Component {
     super(props);
 
     this.state = {
-      page: 'annotation-display',
+      displayComments: false,
     };
   }
   render() {
     return (
       <div>
+        { this.state.displayComments ? <AnnotationDisplay /> : <Comments /> }
       </div>
     );
   }
 }
+
+export default Annotation;

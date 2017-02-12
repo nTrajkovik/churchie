@@ -6,10 +6,9 @@ class Annotate extends Component {
     this.state = {
       // All the user information that pubnub
       // will need I expect to come from props.
-      // pageText: '',
-      // path: '',
-      // name: '',
-      // googleId: '',
+      pageText: '',
+      path: '',
+      name: '',
       comment: '',
     };
 
