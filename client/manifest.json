@@ -13,8 +13,14 @@
       "js": ["bundles/page-content.js"]
     }
   ],
+  "background": {
+    "scripts": ["./background.js"],
+    "persistent": true
+  },
   "permissions": [
     "activeTab",
+    "identity",
+    "identity.email",
     "https://ajax.googleapis.com/"
   ]
 }

@@ -4,8 +4,8 @@ const path = require('path');
 module.exports = {
   devtool: 'eval-source-map',
   entry: {
-    "menu-content": path.resolve(__dirname, 'client/views/menu-content/index.jsx'),
-    "page-content": path.resolve(__dirname, 'client/views/page-content/index.jsx'),
+    'menu-content': path.resolve(__dirname, 'client/views/menu-content/index.jsx'),
+    'page-content': path.resolve(__dirname, 'client/views/page-content/index.jsx'),
   },
   output: {
     path: path.resolve(__dirname, 'bundles'),
