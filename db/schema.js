@@ -8,8 +8,11 @@ const User = db.define('user', {
     autoIncrement: true,
   },
   name: Sequelize.TEXT,
-  chromeId: Sequelize.TEXT,
-  expert: Sequelize.BOOLEAN,
+  googleId: Sequelize.TEXT,
+  expert: {
+    type: Sequelize.BOOLEAN,
+    default: false,
+  },
 });
 
 const Url = db.define('url', {
@@ -37,18 +40,24 @@ const Comment = db.define('comment', {
     autoIncrement: true,
   },
   text: Sequelize.TEXT,
-  upVotes: Sequelize.INTEGER,
-  downVotes: Sequelize.INTEGER,
+  upVotes: {
+    type: Sequelize.INTEGER,
+    default: 0,
+  },
+  downVotes: {
+    type: Sequelize.INTEGER,
+    default: 0,
+  },
 });
 
-Annotation.belongsTo(Url, { foreignKey: 'url_id' });
-Url.hasMany(Annotation, { foreignKey: 'url_id' });
+Annotation.belongsTo(Url, { foreignKey: 'urlId' });
+Url.hasMany(Annotation, { foreignKey: 'urlId' });
 
-Comment.belongsTo(Annotation, { foreignKey: 'passage_id' });
-Annotation.hasMany(Comment, { foreignKey: 'passage_id' });
+Comment.belongsTo(Annotation, { foreignKey: 'annotationId' });
+Annotation.hasMany(Comment, { foreignKey: 'annotationId' });
 
-Comment.belongsTo(User, { foreignKey: 'user_id' });
-User.hasMany(Comment, { foreignKey: 'user_id' });
+Comment.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Comment, { foreignKey: 'userId' });
 
 db.sync({ force: false })
 .then(() => {

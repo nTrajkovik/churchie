@@ -3,13 +3,8 @@ const { User, Url, Annotation, Comment } = require('../db/schema');
 module.exports = {
   startUp: ({ name, googleId }) => (
     User.findOrCreate({
-      where: {
-        name,
-        googleId,
-      },
+      where: { name, googleId },
     })
-    .then(user => user)
-    .catch(err => `Error starting up: ${err}`)
   ),
 
   getAnnotations: ({ path }) => (
@@ -18,27 +13,42 @@ module.exports = {
     })
     .then(({ id }) => (
        Annotation.findAll({
-         where: { path_id: id },
+         where: { urlId: id },
          include: [{
            model: Comment,
            include: [User],
          }],
        })
-    )
-    .then(annotations => annotations)
-    .catch(err => `Error getting annotations: ${err}`)
+    ))
   ),
 
-  getComments: ({ annotationId }) => {
+  getComments: ({ annotationId }) => (
+    Comment.findAll({
+      where: { annotationId },
+      include: [User],
+    })
+  ),
 
-  },
-  postNewUrl: ({ googleId, path, annotation, comment }) => {
-
-  },
-  postNewAnnotation: ({ googleId, annotation, comment, pathId }) => {
-
-  },
-  postComment: ({ googleId, comment, annotationId }) => {
-
-  },
+  postComment: ({ googleId, path, annotation, annotationId, comment }) => (
+    User.find({
+      where: { googleId },
+    })
+    .then(user => (
+      Url.findOrCreate({
+        where: { path },
+      })
+      .then(url => (
+        Annotation.findOrCreate({
+          where: { urlId: url.id, text: annotation },
+        })
+        .then(({ id }) => (
+          Comment.create({
+            text: comment,
+            userId: user.id,
+            annotationId: id,
+          })
+        ))
+      ))
+    ))
+  ),
 };
