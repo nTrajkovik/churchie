@@ -31,16 +31,10 @@ function initRealTimeListeners(pubnub, chan, callback) {
   });
 }
 
-const publishMessage = function (pubnub, channel, { comment, path, googleId, name, annotation }) {
+const publishMessage = function (pubnub, channel, option) {
   pubnub.publish(
     {
-      message: {
-        comment,
-        path,
-        googleId,
-        name,
-        annotation,
-      },
+      message: option,
       channel,
     },
     (status) => {
