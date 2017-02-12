@@ -17,11 +17,23 @@ function setupHighlightListener() {
   }());
 
   document.body.addEventListener('click', (e) => {
-    if ((e.target.parentNode.getAttribute('data-churchie-anchor') !== 'true') && (document.getElementById('churchie-anchor') !== null)) {
+    if ((document.getElementById('churchie-anchor') !== null) && !isDescendant(document.getElementById('churchie-anchor'), e.target)) {
       const body = document.getElementsByTagName('body');
       body[0].removeChild(document.getElementById('churchie-anchor'));
     }
   });
 }
 
+function isDescendant(parent, child) {
+  let node = child.parentNode;
+  while (node != null) {
+    if (node === parent) {
+      return true;
+    }
+    node = node.parentNode;
+  }
+  return false;
+}
+
 export default setupHighlightListener;
+
