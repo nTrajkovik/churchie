@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
+import { pubnub, createNewComment } from '../../../../helpers/pubnub/userHelpers.js';
 
 class TextEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // All the user information that pubnub
-      // will need I expect to come from props.
-      pageText: '',
-      path: '',
-      name: '',
-      comment: '',
+      comment: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -18,12 +14,19 @@ class TextEditor extends Component {
 
   handleChange(event) {
     this.setState({
-      comment: event.target.value,
+      comment: event.target.value
     });
   }
 
   handleSubmit(event) {
-    // will emit to pubnub
+    event.preventDefault();
+    createNewComment(pubnub, {
+      comment: this.state.comment,
+      path: this.props.path,
+      googleId: this.props.googleId,
+      name: this.props.name,
+      annotation: this.props.annotation
+    });
   }
 
   render() {
