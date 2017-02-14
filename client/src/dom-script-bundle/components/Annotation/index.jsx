@@ -1,56 +1,67 @@
 import React, { Component } from 'react';
-import AnnotationDisplay from './AnnotationDisplay';
+import AddComment from './AddComment';
 import Comments from './Comments';
 import Modal from '../Modal';
-import { pubnub, initRealTimeListeners, getHistory, publishMessage } from '../../../helpers/pubnub/userHelpers';
+import {
+  pubnub,
+  createNewComment,
+  initRealTimeListeners,
+  getHistory,
+} from '../../../helpers/pubnub/userHelpers';
 
 class Annotation extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      displayComments: false,
-      comments: [{}],
-      username: '',
+      comments: [],
     };
-  }
-
-  componentWillMount() {
-    this.setState({
-      username: chrome.runtime.sendMessage('GET_USERNAME', (name) => {
-        console.log('Chrome username on sync Object:', name);
-        return name;
-      }),
-    });
     // get history for this annotation channel
-    getHistory(pubnub, this.props.annotation, (commentsArray) => {
-      const newComments = commentsArray.map((comment) => {
+    getHistory(pubnub, (document.URL), (commentsArray) => {
+      console.log("doesnt exist", commentsArray);
+      const newComments = commentsArray.messages.map(({entry}) => {
         // initialize listeners for each comment channel
-        initRealTimeListeners(pubnub, comment.comment, (message) => {
-          for (let i = 0; i < this.state.comments.length; i++) {
-            const thisComment = this.state.comments[i];
-            if (thisComment.comment === message.comment) {
-              let update = [...this.state.comments];
-              update[i] = message;
-              update = update.sort((a, b) => a.up - b.up);
-              this.setState({ comments: update });
-              break;
-            }
-          }
+        console.log("A COMMENT", entry);
+        // initRealTimeListeners(pubnub, entry.comment, (message) => {
+        //   for (let i = 0; i < this.state.comments.length; i++) {
+        //     const thisComment = this.state.comments[i];
+        //     if (thisComment.comment === message.comment) {
+        //       let update = [...this.state.comments];
+        //       update[i] = message;
+        //       update = update.sort((a, b) => a.up - b.up);
+        //       this.setState({ comments: update });
+        //       break;
+        //     }
+        //   }
+        // });
+        return new Promise((resolve, reject) => {
+          pubnub.history({ channel: entry.comment, count: 1 }, (status, resp) => {
+            resolve({
+              raw: entry,
+              votes: resp
+            });
+          });
+        })
+      });
+      Promise.all(newComments)
+        .then(data => {
+          console.log('after promise', data);
+          this.setState({
+            comments: data,
+          });
         });
-        return pubnub.history({ channel: comment.comment, count: 1 })[0];
-      }).sort((a, b) => a.up - b.up);
-      this.setState({ comments: newComments });
+
     });
     // initialize listener for this annotation channel
-    initRealTimeListeners(pubnub, this.props.annotation, (comment) => {
+    initRealTimeListeners(pubnub, (document.URL), (comment) => {
       const update = [...this.state.comments].push(comment);
       this.setState({ comments: update });
     });
+
+    this.submitComment = this.submitComment.bind(this);
   }
 
   componentWillUnmount() {
-    let channels = [this.props.annotation];
+    let channels = [(document.URL)];
     this.state.comments.forEach((comment) => {
       channels.push(comment.comment);
     });
@@ -73,16 +84,26 @@ class Annotation extends Component {
     publishMessage(pubnub, comment, optionUpdate);
   }
 
+  submitComment(formData) {
+    let data = {
+      comment: formData.comment,
+      path: document.URL,
+      googleId: this.props.user.id,
+      name: this.props.username,
+      annotation: (document.URL),
+    };
+
+    createNewComment(pubnub, data);
+  }
+
   render() {
     const { top } = this.props;
-    if (!this.state.comments.length) {
-      return (
-        <div>No comments</div>
-      );
-    }
     return (
       <Modal top={top}>
-        { this.state.displayComments ? <AnnotationDisplay /> : <Comments comments={this.state.comments} upVoteCallback={this.upVoteCallback} /> }
+        { this.state.comments.length ? <div>
+          <Comments comments={this.state.comments} upVoteCallback={this.upVoteCallback} />
+        </div> : <div>No comments yet!</div> }
+        <AddComment submit={this.submitComment} />
       </Modal>
     );
   }

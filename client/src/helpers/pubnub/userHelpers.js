@@ -10,7 +10,11 @@ function getHistory(pubnub, channel, callback) {
     channel,
     count: 100,
   }, (status, response) => {
-    if (status.error) { console.log('status of history request: ', status); }
+    if (status.error && status.message === "Missing channel") {
+      console.log('status of history request: ', status);
+      publishMessage(pubnub, channel, 'test what up');
+      callback();
+    }
     console.log('got history for ', channel, response);
     callback(response);
   });

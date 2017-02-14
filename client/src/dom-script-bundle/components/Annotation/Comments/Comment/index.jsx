@@ -8,21 +8,19 @@ class Comment extends React.Component {
   }
 
   render() {
+    console.log('comment props', this.props);
     return (
       <li>
-        { this.props.comment }
-        { this.props.imgPath ?
-          <img className="userImage" alt={'Not found'} src={this.props.imgPath} /> :
-          null }
+        { this.props.comment.raw.comment }
         <button onClick={() => { this.props.upVoteCallback(this.props.comment); }}>upVote</button>
       </li>
     );
   }
 }
 
-Comment.propTypes = {
-  comment: React.propTypes.string.isRequired,
-  imgPath: React.propTypes.string.isRequired,
-};
+// Comment.propTypes = {
+//   comment: React.propTypes.string.isRequired,
+//   imgPath: React.propTypes.string.isRequired,
+// };
 
 export default Comment;

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { pubnub, createNewComment } from '../../../../../helpers/pubnub/userHelpers.js';
 
 class TextEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment: ''
+      comment: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -14,13 +13,13 @@ class TextEditor extends Component {
 
   handleChange(event) {
     this.setState({
-      comment: event.target.value
+      comment: event.target.value,
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    createNewComment(pubnub, {
+    this.props.submit({
       comment: this.state.comment,
       path: this.props.path,
       googleId: this.props.googleId,
