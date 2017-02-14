@@ -4,7 +4,7 @@ class TextEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comment: ''
+      comment: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -13,7 +13,7 @@ class TextEditor extends Component {
 
   handleChange(event) {
     this.setState({
-      comment: event.target.value
+      comment: event.target.value,
     });
   }
 
